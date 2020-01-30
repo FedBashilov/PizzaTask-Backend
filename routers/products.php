@@ -10,12 +10,12 @@ function route($method, $urlData, $formData) {
             // GET /products
         if (count($urlData) === 0) {
             $allProductsId = [];
-            $sql = "SELECT product_id FROM product";
+            $sql = "SELECT id FROM product";
 
             if($result = mysqli_query($con,$sql)) {
                 
                 for($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
-                    $allProductsId[$i] = $row['product_id'];
+                    $allProductsId[$i] = $row['id'];
                 }
                 echo json_encode($allProductsId);
             }
@@ -25,16 +25,16 @@ function route($method, $urlData, $formData) {
             return;
         }
             // Получение информации о товаре
-            // GET /products/{product_id}
+            // GET /products/{id}
         if (count($urlData) === 1) {
-            $product_id = $urlData[0];
-            $sql = "SELECT product_id, name, description, price, photo FROM product WHERE product_id = '$product_id'";
+            $id = $urlData[0];
+            $sql = "SELECT id, name, description, price, photo FROM product WHERE id = '$id'";
 
             if($result = mysqli_query($con,$sql)) {
                 
                 $row = mysqli_fetch_assoc($result);
                 
-                $product['product_id'] = $row['product_id'];
+                $product['id'] = $row['id'];
                 $product['name'] = $row['name'];
                 $product['description'] = $row['description'];
                 $product['price'] = $row['price'];
