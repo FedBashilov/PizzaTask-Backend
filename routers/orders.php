@@ -17,20 +17,10 @@ function route($method, $urlData, $formData) {
         $client_email = mysqli_real_escape_string($con, trim( $newOrder->data->client_email));
         $client_address = mysqli_real_escape_string($con, trim( $newOrder->data->client_address));
         $client_comment = mysqli_real_escape_string($con, trim( $newOrder->data->client_comment));
-        
-        echo $client_name;
-        echo $client_phone;
-        echo $client_email;
-        echo $client_address;
-        echo $client_comment;
 
   // Store.
         $sqlOrder = "INSERT INTO `client_order`(`id`,`client_name`,`client_phone`,  `client_address`, `client_email`, `client_comment`) VALUES (null,'{$client_name}','{$client_phone}', '{$client_address}', '{$client_email}', '{$client_comment}')";
         
-        if($con)
-        {
-            echo "CONNECT";
-        };
 
         if(mysqli_query($con,$sqlOrder)){
             http_response_code(201);
@@ -46,12 +36,12 @@ function route($method, $urlData, $formData) {
                 } else {
                     http_response_code(422);
                     echo "error";
-                    break;
+                    return;
                 }
             }
             
             
-            echo json_encode(['data'=>$newOrderId]);
+            echo json_encode($newOrderId);
         }
         else
         {
