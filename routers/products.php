@@ -1,19 +1,18 @@
 <?php
 
-// Роутер
+
 function route($method, $urlData, $formData) {
     
     require 'database.php';
 
     if ($method === 'GET') {
-            // Получение id товаров
-            // GET /products
+
+    // GET /products
         if (count($urlData) === 0) {
             $allProductsId = [];
             $sql = "SELECT id FROM product";
 
             if($result = mysqli_query($con,$sql)) {
-                
                 for($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
                     $allProductsId[$i] = $row['id'];
                 }
@@ -24,8 +23,8 @@ function route($method, $urlData, $formData) {
             }
             return;
         }
-            // Получение информации о товаре
-            // GET /products/{id}
+        
+    // GET /products/{id}
         if (count($urlData) === 1) {
             $id = $urlData[0];
             $sql = "SELECT id, name, description, price, photo FROM product WHERE id = '$id'";
@@ -51,7 +50,7 @@ function route($method, $urlData, $formData) {
         return;
     }
  
-    // Возвращаем ошибку
+    // return error
     header('HTTP/1.0 400 Bad Request');
     echo json_encode(array(
         'error' => 'Bad Request'
